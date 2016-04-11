@@ -1,0 +1,751 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Warnick Design</title>
+
+    <!-- RSS Feed Reference -->
+    <script src="scripts/jquery-2.2.1.min.js"></script>
+    <script src="scripts/jquery.reject.js"></script>
+    <script src="scripts/Ply.js"></script>
+    <script src="scripts/offline.min.js"></script>
+    <script src="scripts/moment.js"></script>
+    <script src="scripts/moment-with-locales.js"></script>
+    <script src="scripts/md5.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/uaSpoofing.js"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/grayscale.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="css/ply.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery.reject.css" type="text/css" />
+    <link rel="stylesheet" href="css/offline-theme-default.css" type="text/css" />
+    <link rel="stylesheet" href="css/offline-language-english.css" type="text/css" />
+
+    <style>
+                html, body {
+            height: 100%;
+        }
+
+       .white{
+
+           color: #ffffff;
+       }
+
+       .bigScreen #myFeedWrapper, .bigScreen #currFeedWrapper{
+    width: 25%;
+  }
+  .smallScreen #myFeedWrapper, .smallScreen #currFeedWrapper{
+    width: 100%;
+    position: absolute;
+  }
+  .smallScreen #selFeedWrapper{
+    width: 100%;
+    position: absolute;
+  }       
+   .bigScreen #selFeedWrapper{
+    width: 48%;
+  }  
+      .bigScreen .backButton{
+    display: none;
+  }
+        .fadeBox{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.4);
+  }
+        xbody {
+            background-color: #F0F0F0;
+            font-family: "Verdana";
+            font-size: 12px;
+            text-align: center;
+        }
+    
+        xh1 {
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+            font-size: 24px;
+        }
+    
+        ol {
+            padding-left: 20px;
+            text-align: left;
+        }
+    
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+    
+        .header {
+            display: table;
+            height: 15%;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    
+        .xcontent {
+            height: 75%;
+            padding: 20px;
+            overflow: auto;
+            background-color: white;
+            border: 1px solid;
+            border-radius: 5px;
+            border-color: #D0D0D0;
+        }
+    
+        .centeredButton {
+            text-align: center;
+        }
+    
+        .xbutton {
+            padding: 5px;
+            background-color: #F0F0F0;
+            color: black;
+            border: 1px solid;
+            border-radius: 5px;
+            border-color: #D0D0D0;
+            text-decoration: none;
+        }
+    
+        #xloginBar {
+            height: 15px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid;
+            border-radius: 5px;
+            border-color: #D0D0D0;
+        }
+    
+        #xusername {
+            float: right;
+            padding-right: 10px;
+        }
+    
+        #xmyFeedWrapper, #xcurrFeedWrapper {
+            display: inline-block;
+            vertical-align: top;
+            height: 100%;
+            width: 25%;
+            margin-right: 15px;
+            border-color: #D0D0D0;
+        }
+    
+        #xselFeedWrapper {
+            display: inline-block;
+            vertical-align: top;
+            height: 100%;
+            width: 45%;
+        }
+
+
+    </style>
+
+
+
+</head>
+<body onload="startUp()" id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="index.html">
+                    <i class="fa fa-play-circle"></i>  <span class="light">Home</span>
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="index.html"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#rss">RSS</a>
+                    </li>
+                    <li>
+                        <a id="loginButton" href="javascript:showLogin()" class="button">Login</a>
+                    </li>
+                    <li>
+                        <a id="signUpButton" href="javascript:showSignUp()" class="button">Sign Up</a>
+                    </li>
+                    <li>
+                        <a id="username"></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading white">RSS FEED</h1>
+
+                        <a href="#rss" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+
+    
+
+    
+    <!-- RSS Section -->
+    <section id="rss" class="container content-section text-center">
+        <div class="row">
+            <!-- Section Title -->
+            <div class="col-lg-8 col-lg-offset-2">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div id="loginBar">
+                    <div style="float: left;"><a id="signUpButton" href="javascript:showSignUp()" class="button"></a></div>
+                    <div style="float: right;"><a id="loginButton" href="javascript:showLogin()" class="button"></a></div>
+                    <div id="username"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div id="myFeedWrapper">
+                    <div class="header"><h1>My Feeds</h1></div>
+                    <div class="content">
+                        <div class="centeredButton"><a href="javascript:showAddSub()" id="addButton" class="button" style="visibility: hidden;">Add Feed</a></div>
+                        </br>
+                        <div id="myFeedList">Login or sign up to view your feeds!</div>
+                        <a href="#currFeedWrapper" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2">
+                <div id="currFeedWrapper">
+                    <div class="header"><h1 id="currFeedTitle">Current Feed</h1></div>
+                    <div class="content">
+                        <div class="centeredButton"><a href="javascript:deleteSub()" id="deleteButton" class="button" style="visibility: hidden;">Delete Feed</a></div>
+                        </br></br>
+                        <div id="lastUpdated" style="visibility: hidden;"><b>Last Updated: </b><div id="updated"></div></div>
+                        </br>
+                        <div id="currFeedList"> </div>
+                        <a href="#selFeedWrapper" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2">
+                <div id="selFeedWrapper">
+                    <div class="header"><h1 id="currPostTitle">Feed Details</h1></div>
+                    <div class="content">
+                        <div id="feedDetails"> </div>
+                        <a href="#currFeedWrapper" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>   
+            </div>
+
+
+
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Warnick Photography 2015</p>
+        </div>
+    </footer>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/grayscale.js"></script>
+
+
+    <script>
+        var user = null;
+        var allSubs = null;
+        var currentSub = null; //current feed that is open
+        var currentSubLink = null; //link for current feed that is open
+
+        var startUp = function() {
+            checkBrowsers();
+            showLogin();
+        }
+
+        var AI = {
+            show: function () {
+                var mu = "<div class='acInd fadeBox'>" +
+                  '<div class="theSpinner"> </div>' +
+                  "</div>";
+                document.body.innerHTML += mu;
+            },
+            hide: function () {
+                $(".acInd").remove();
+            }
+        }
+
+        function backToMyFeeds() {
+            if (ENV.screen.small) {
+                $("#currFeedWrapper, #selFeedWrapper").fadeOut();
+                $("#myFeedWrapper").fadeIn();
+            }
+        }
+        function backToCurrFeeds() {
+            if (ENV.screen.small) {
+                $("#myFeedWrapper, #selFeedWrapper").fadeOut();
+                $("#currFeedWrapper").fadeIn();
+            }
+        }
+
+        var checkBrowsers = function() {
+            $.reject({
+                reject: {
+                    msie: 7, //reject Internet Explorer 7 and below
+                    opera: true,
+                    konqueror: true,
+                    unknown: true
+                },
+                header: "Unsupported Browser",
+                paragraph1: "Your browser is not supported and some features on this website may not work correctly.",
+                paragraph2: "For the best possible experience, we recommend using the latest version of one of the options below.",
+                display: ["chrome", "firefox", "safari", "msie"]
+            });
+        }
+
+        var showLogin = function() {
+            Ply.dialog("prompt", {
+                title: "Login",
+                form: {
+                    email: "Email",
+                    password: {hint: "Password", type: "password"}
+                }
+            })
+            .then((ui) => {
+                var data = ui.data;
+
+                //Get email and password
+                var tempUser = data.email;
+                var password = data.password;
+
+                if (tempUser.length > 0 && password.length > 0) {
+                    var url = "./login?user=" + tempUser + "&password=" + password;
+
+                    loadURL(url, function(data) {
+                        var res = data;
+
+                        if (res == "1") {
+                            user = tempUser;
+                            login();
+                        }
+                        else {
+                            Ply.dialog("alert", "Invalid email or password")
+                            .then((ui) => {
+                                showLogin();
+                            })
+                            .catch((ui) => {
+                                //Pressed cancel
+                            });
+                        }
+                    });
+                }
+            })
+            .catch((ui) => {
+                //Pressed cancel
+            });
+        }
+
+        var showSignUp = function() {
+            Ply.dialog("prompt", {
+                title: "Sign Up",
+                form: {
+                    email: "Email",
+                    password: {hint: "Password", type: "password"}
+                }
+            })
+            .then((ui) => {
+                var data = ui.data;
+
+                //Get email and password
+                var tempUser = data.email;
+                var password = data.password;
+
+                if (tempUser.length > 0 && password.length > 0) {
+                    var url = "./createUser?user=" + tempUser + "&password=" + password;
+
+                    loadURL(url, function(data) {
+                        var res = data;
+
+                        if (res == "1") {
+                            user = tempUser;
+                            login();
+                        }
+                        else {
+                            Ply.dialog("alert", "Email already in use")
+                            .then((ui) => {
+                                showSignUp();
+                            })
+                            .catch((ui) => {
+                                //Pressed cancel
+                            });
+                        }
+                    });
+                }
+            })
+            .catch((ui) => {
+                //Pressed cancel
+            });
+        }
+
+        var login = function() {
+            if (user != null) {
+                //Display user in top right corner
+                document.getElementById("username").innerHTML = user;
+
+                //Change login button to logout
+                document.getElementById("loginButton").innerHTML = "Logout";
+                document.getElementById("loginButton").href = "javascript:logout()";
+
+                //Hide sign up button
+                document.getElementById("signUpButton").style.visibility = "hidden";
+
+                //Show add button and feed list
+                document.getElementById("addButton").style.visibility = "visible";
+
+                loadMySubs(0); //open first feed after loading
+            }
+        }
+
+        var logout = function() {
+            //Clear out user
+            user = null;
+            document.getElementById("username").innerHTML = "";
+
+            //Change logout button to login
+            document.getElementById("loginButton").innerHTML = "Login";
+            document.getElementById("loginButton").href = "javascript:showLogin()";
+
+            //Show sign up button
+            document.getElementById("signUpButton").style.visibility = "visible";
+
+            //Hide add button and feed list
+            document.getElementById("addButton").style.visibility = "hidden";
+            document.getElementById("myFeedList").innerHTML = "Login or sign up to view your feeds!";
+
+            loadMySubs(-1); //no feeds to open
+        }
+
+        var loadMySubs = function(subIndexToOpen) {
+            var url = "./listSubs?user=" + user;
+
+            loadURL(url, function(data) {
+                var mySubs = JSON.parse(data);
+
+                allSubs = mySubs;
+
+                if (mySubs.length == 0) {
+                    if (subIndexToOpen > -1) {
+                        document.getElementById("myFeedList").innerHTML = "No subsciptions";
+                    }
+
+                    //Clear out content
+                    document.getElementById("currFeedTitle").innerHTML = "Current Feed";
+                    document.getElementById("currFeedList").innerHTML = "";
+                    document.getElementById("currPostTitle").innerHTML = "Feed Details";
+                    document.getElementById("feedDetails").innerHTML = "";
+                    document.getElementById("deleteButton").style.visibility = "hidden";
+                    document.getElementById("lastUpdated").style.visibility = "hidden";
+                }
+                else {
+                    var markUp = "<ol>"; //each feed will be a list item
+
+                    for (var i = 0; i < mySubs.length; i++) {
+                        var mySub = mySubs[i];
+
+                        markUp += "<li><a href='javascript:openSub(" + i + ")' class='listItem'>" + mySub.id + "</a></li>";
+                    }
+
+                    markUp += "</ol>";
+
+                    document.getElementById("myFeedList").innerHTML = markUp;
+                    if (ENV.screen.small) {
+                        $("#currFeedWrapper, #selFeedWrapper").fadeOut();
+                        $("#myFeedWrapper").fadeIn();
+                    }
+
+                    openSub(subIndexToOpen); //open feed
+                }
+            });
+        }
+
+        var showAddSub = function() {
+            //Prompt user for link
+            Ply.dialog("prompt", {
+                title: "RSS Feed URL",
+                form: {url: "URL"}
+            })
+            .then((ui) => {
+                var data = ui.data;
+
+                //Get link
+                var link = data.url;
+
+                if (link != null && (link.indexOf("/xml") > -1 || link.indexOf("/json") > -1)) {
+                    link = link.replace("/xml", "/json"); //convert to JSON format if necessary
+                    addSub(link);
+                }
+                else {
+                    Ply.dialog("alert", "Invalid RSS feed URL")
+                    .then((ui) => {
+                        showAddSub();
+                    })
+                    .catch((ui) => {
+                        //Pressed cancel
+                    });
+                }
+            })
+            .catch((ui) => {
+                //Pressed cancel
+            });
+        }
+
+        var addSub = function(link) {
+            var id = "No Title";
+            var url = "./getAllPosts?link=" + link;
+
+            loadURL(url, function(data) {
+                var sub = JSON.parse(data).feed;
+
+                id = sub.title.label; //get feed title to display in myFeedList
+
+                url = "./addOrEditSub?user=" + user + "&id=" + id + "&link=" + link;
+
+                loadURL(url, function(data) {
+                    var res = data;
+
+                    if (res == "0") {
+                        console.log("Error adding sub");
+                    }
+                    else {
+                        loadMySubs(allSubs.length); //refresh myFeedList and open added feed
+                    }
+                    document.getElementById("currFeedWrapper").innerHTML =
+                    "<a href='javascript:backToMyFeeds()' class='backButton'> Back </a>" + markUp;
+                    if (ENV.screen.small) {
+                        $("#myFeedWrapper, #selFeedWrapper").fadeOut();
+                        $("#currFeedWrapper").fadeIn();
+                    }
+                    AI.hide();
+                }
+                
+                );
+            });
+        }
+
+        var deleteSub = function() {
+            var url = "./deleteSub?user=" + user + "&link=" + currentSubLink;
+
+            loadURL(url, function(data) {
+                var res = data;
+
+                if (res == "0") {
+                    console.log("Error deleting sub");
+                }
+                else {
+                    loadMySubs(0); //refresh myFeedList
+                }
+            });
+        }
+
+        var openSub = function(index) {
+            if (allSubs.length > 0) {
+                selectListItem(index, "myFeedList"); //show sub as selected
+
+                var subToOpen = allSubs[index];
+                var subLink = subToOpen.link;
+
+                currentSubLink = subLink;
+
+                var url = "./getAllPosts?link=" + currentSubLink;
+
+                loadURL(url, function(data) {
+                    var sub = JSON.parse(data).feed;
+
+                    currentSub = sub;
+
+                    document.getElementById("currFeedTitle").innerHTML = currentSub.title.label; //display feed title in header
+
+                    //Display when feed was last updated
+                    var updated = currentSub.updated.label;
+                    document.getElementById("lastUpdated").style.visibility = "visible";
+                    document.getElementById("updated").innerHTML = moment(updated).fromNow();
+
+                    var posts = currentSub.entry; //get all posts in feed
+
+                    if (posts) {
+                        var numPosts = posts.length; //number of posts in feed
+
+                        if (numPosts == 0) {
+                            document.getElementById("currFeedList").innerHTML = "No posts";
+                        }
+                        else {
+                            var markUp = "<ol>"; //each post wll be a list item
+
+                            for (var i = 0; i < numPosts; i++) {
+                                var post = posts[i];
+
+                                markUp += "<li><a href='javascript:openPost(" + i + ")' class='listItem'>" + post.title.label + "</a></li>";
+                            }
+
+                            markUp += "</ol>";
+
+                            document.getElementById("currFeedList").innerHTML = markUp;
+                            if (ENV.screen.small) {
+                                $("#currFeedWrapper, #selFeedWrapper").fadeOut();
+                                $("#myFeedWrapper").fadeIn();
+                            }
+
+                            openPost(0); //open first post
+                        }
+                    }
+                    else {
+                        //Clear out content
+                        document.getElementById("currFeedList").innerHTML = "No posts";
+                        document.getElementById("currPostTitle").innerHTML = "Feed Details";
+                        document.getElementById("feedDetails").innerHTML = "";
+                    }
+
+                    document.getElementById("deleteButton").style.visibility = "visible"; //show Delete Feed button
+                });
+            }
+        }
+
+        var openPost = function(index) {
+            selectListItem(index, "currFeedList");
+
+            var postToOpen = currentSub.entry[index];
+
+            //Get post name and display in header
+            var name = postToOpen["im:name"].label;
+            document.getElementById("currPostTitle").innerHTML = name;
+
+            //Get image for post and set its height
+            var image = postToOpen["im:image"][2].label;
+            var imageHeight = postToOpen["im:image"][2].attributes.height;
+            var markUp_image = "<p><img src='" + image + "' style='height: " + imageHeight + "px;'></p>";
+
+            //Get artist name and add link (if available)
+            var artist = postToOpen["im:artist"].label;
+            var artistLink = postToOpen["im:artist"].attributes;
+            var markUp_artist = "<p><b>Artist(s): </b>";
+
+            if (artistLink) {
+                markUp_artist += "<a target='_blank' href='" + artistLink.href + "'>" + artist + "</a></p>";
+            }
+            else {
+                markUp_artist += artist + "</p>";
+            }
+
+            //Get release date
+            var releaseDate = postToOpen["im:releaseDate"].attributes.label;
+            var markUp_releaseDate = "<p><b>Release Date: </b>" + releaseDate + "</p>";
+
+            //Get price
+            var price = postToOpen["im:price"].label;
+
+            if (price == "Get") {
+                price = "Free";
+            }
+
+            var markUp_price = "<p><b>Price: </b>" + price + "</p>";
+
+            //Get category
+            var category = postToOpen.category.attributes.label;
+            var categoryLink = postToOpen.category.attributes.scheme;
+            var markUp_category = "<p><b>Category: </b><a target='_blank' href='" + categoryLink + "'>" + category + "</a></p>";
+
+            //Get summary (if available)
+            var summary = postToOpen.summary;
+            var markUp_summary = "<p><b>Summary: </b>";
+
+            if (summary) {
+                markUp_summary += summary.label + "</p>";
+            }
+            else {
+                markUp_summary += "Unavailable</p>";
+            }
+
+            //Create button with link to the iTunes page
+            var fullLink = postToOpen.id.label;
+            var markUp_fullLink = "</br><div class='centeredButton'><a target='_blank' href='" + fullLink + "' class='button'>View on iTunes</a></div>";
+
+            var markUp = markUp_image + markUp_artist + markUp_releaseDate + markUp_price + markUp_category + markUp_summary + markUp_fullLink;
+
+            document.getElementById("feedDetails").innerHTML = markUp;
+        }
+
+        var selectListItem = function(index, listName) {
+            var listItems = document.getElementById(listName).getElementsByClassName("listItem");
+
+            for (var i = 0; i < listItems.length; i++) {
+                if (i == index) {
+                    listItems[i].style.color = "red";
+                }
+                else {
+                    listItems[i].style.color = "";
+                }
+            }
+        }
+    </script>
+
+
+</body>
+</html>
